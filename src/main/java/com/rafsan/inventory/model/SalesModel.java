@@ -9,10 +9,11 @@ import javafx.collections.ObservableList;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public class SalesModel implements SaleDao {
+public class SalesModel implements SaleDao, Iterable<Sale> {
 
     private static Session session;
-
+    private List<Sale> sales;
+    private int index;
     @Override
     public ObservableList<Sale> getSales() {
 
@@ -84,5 +85,25 @@ public class SalesModel implements SaleDao {
         session.delete(s);
         session.getTransaction().commit();
     }
+    public class SalesModel implements SaleDao, Iterable<Sale> {
+
+  @Override
+  public Iterator<Sale> iterator() {
+    return new SaleIteratorImpl(getSales()); 
+  }
+
+    
+    public SaleIteratorImpl(List<Sale> sales) {
+      this.sales = sales;
+    }
+    
+    public boolean hasNext() {
+      return index < sales.size(); 
+    }
+    
+    public Sale next() {
+      return sales.get(index++);
+    }
+  
 
 }
