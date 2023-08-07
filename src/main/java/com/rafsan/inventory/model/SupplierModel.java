@@ -14,6 +14,10 @@ import org.hibernate.criterion.Projections;
 public class SupplierModel implements SupplierDao {
 
     private static Session session;
+    private SupplierStrategy strategy;
+    public List<Supplier> getSuppliers() {
+        return strategy.getSuppliers();
+  }
 
     @Override
     public ObservableList<Supplier> getSuppliers() {
