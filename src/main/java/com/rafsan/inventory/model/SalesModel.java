@@ -12,6 +12,15 @@ import org.hibernate.criterion.Restrictions;
 public class SalesModel implements SaleDao {
 
     private static Session session;
+    private List<SaleObserver> observers = new ArrayList<>();
+
+  public void registerObserver(SaleObserver observer) {
+    observers.add(observer);
+  }
+  
+  public void removeObserver(SaleObserver observer) {
+    observers.remove(observer);
+  }
 
     @Override
     public ObservableList<Sale> getSales() {
